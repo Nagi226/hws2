@@ -1,11 +1,13 @@
 .App {
+    display: flex;
+    flex-direction: column;
     --header_height: 60px;
     font-family: 'Montserrat'
 
 }
 
 .hw {
-    position: absolute;
+
     width: 100%;
     height: 373px;
     left: 0px;
@@ -17,7 +19,6 @@
 }
 
 .hwTitle {
-    position: absolute;
     width: 165px;
     height: 27px;
     left: 70px;
@@ -28,7 +29,7 @@
     font-weight: 600;
     font-size: 22px;
     line-height: 27px;
-    /* identical to box height */
+    margin: 70px 0px 10px 70px;
 
 
     color: #000000;
