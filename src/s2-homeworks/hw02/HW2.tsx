@@ -46,7 +46,7 @@ export const filterAffairs = (affairs: Array<AffairType>, filter: FilterType): A
 
    // need to fix
 }
-export const deleteAffair = (affairs: Array<AffairType>, _id: number): Array<AffairType> => { // need to fix any
+export const deleteAffair = (affairs: Array<AffairType>, _id: number): Array<AffairType> => { // удаление 1 эл из массива по ID
     return affairs.filter(el => {
         return el._id !== _id
     })

@@ -2,6 +2,7 @@
 }
 
 .inputAndButtonContainer {
+    display: flex
 }
 
 .error {
@@ -17,6 +18,9 @@
 }
 
 .button {
+    width: 100px;
+    height: fit-content;
+    margin-left: 10px;
 }
 
 .button:focus {
@@ -29,6 +33,7 @@
 }
 
 .text {
+    margin-top: 30px
 }
 
 .greeting {
