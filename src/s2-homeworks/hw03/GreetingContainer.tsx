@@ -46,13 +46,10 @@ export const pureOnEnter = (e: KeyboardEvent<HTMLInputElement>, addUser: ()=> vo
         const setNameCallback = (e: ChangeEvent<HTMLInputElement>) => { // need to fix any
             setName(e.currentTarget.value) // need to fix
 
-            error && setError('')
+            error && setError('')    // if error не пустая строка обнули
         }
         const addUser = () => {
             pureAddUser(name, setError, setName, addUserCallback)
-
-
-
         }
 
         const onBlur = () => {
