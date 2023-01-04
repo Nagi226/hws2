@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     --header_height: 60px;
-    font-family: 'Montserrat'
+    font-family: 'Montserrat';
 
 }
 

@@ -1,25 +1,62 @@
 .sidebar {
+    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+
+    font-family: 'Montserrat', sans-serif;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 317px;
+    height: 100%;
+    padding: 15px;
+    background: gainsboro;
+    transform: translateX(-100%);
+    transition: transform 0.5s;
+
 }
 
+
 .sidebar.open {
+    transform: translateX(0);
+    z-index: 1;
 }
 
 .background {
+    background: gainsboro
 }
 
 .nav {
+    display: flex;
+    flex-direction: column;
+    color: black;
+    margin-top: 15px;
+    width: 100%;
+    text-align: center;
 }
-
 .nav a {
+    text-decoration: none;
 }
 
 .nav a:hover {
+    color: #58ACFF;
+
+}
+
+.nav a:active{
+    color: #3D6B99;
+
 }
 
 .nav a.active {
+    text-decoration-line: underline;
+    color: #0059B2;
+    margin-top: 15px;
 }
 .close {
 }
 
 .close img {
 }
+
+
