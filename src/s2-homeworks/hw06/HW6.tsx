@@ -16,17 +16,24 @@ const HW6 = () => {
 
 
     const save = () => {
-        let previousValue = JSON.parse(localStorage.getItem('hw6-editable-span-value') || '');
-
+        let previousValueJson = localStorage.getItem('hw6-editable-span-value');
+        const prevValue = previousValueJson ? JSON.parse(previousValueJson) : '';
         saveState<string>('hw6-editable-span-value', value)
-        saveState<string>('hw6-editable-span-value-old', previousValue)
+
+        if (prevValue)
+        {
+            saveState<string>('hw6-editable-span-value-old', prevValue)
+        }
     }
 
 
     const restore = () => {
-        const previousValue = localStorage.getItem('hw6-editable-span-value-old') || '';
-        saveState<string>('hw6-editable-span-value', previousValue)
-        setValue(JSON.parse(previousValue))
+        let previousValue = localStorage.getItem('hw6-editable-span-value-old');
+        if (!previousValue){
+            previousValue = localStorage.getItem('hw6-editable-span-value');
+        }
+
+        setValue(previousValue ? JSON.parse(previousValue) : '');
     }
 
     return (
