@@ -13,18 +13,20 @@ import s from './HW6.module.css'
 
 const HW6 = () => {
     const [value, setValue] = useState<string>('')
-    const [valueOld, setValueOld] = useState<any>('')
+
 
     const save = () => {
-        let previousValue = localStorage.getItem('hw6-editable-span-value')
-        setValueOld(previousValue)
+        let previousValue = JSON.parse(localStorage.getItem('hw6-editable-span-value') || '');
+
         saveState<string>('hw6-editable-span-value', value)
+        saveState<string>('hw6-editable-span-value-old', previousValue)
     }
 
 
     const restore = () => {
-        saveState<string>('hw6-editable-span-value', valueOld)
-        setValue(JSON.parse(valueOld))
+        const previousValue = localStorage.getItem('hw6-editable-span-value-old') || '';
+        saveState<string>('hw6-editable-span-value', previousValue)
+        setValue(JSON.parse(previousValue))
     }
 
     return (
