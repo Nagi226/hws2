@@ -1,4 +1,6 @@
 .radio {
+
+
 }
 
 .radio::before {
@@ -12,4 +14,6 @@
 }
 
 .options {
+    display: flex;
+    flex-direction: column;
 }
