@@ -12,13 +12,22 @@ import {Loader} from './Loader'
 * 3 - дописать функцию setLoading
 * 4 - сделать стили в соответствии с дизайном
 * */
-
+export type loadingType = {
+    isLoading: boolean
+}
 const HW10 = () => {
+
+    const isLoading= useSelector<AppStoreType,boolean>(state => state.loading.isLoading)
+    const  dispatch = useDispatch()
     // useSelector, useDispatch // пишет студент
-    const isLoading = false
+   // let isLoading = false
 
     const setLoading = () => { // пишет студент // показать крутилку на 1,5 секунд
+
+       // let action = loadingAC(!isLoading)
+        dispatch(loadingAC(!isLoading))
         // dispatch
+        setTimeout(() => {dispatch(loadingAC(false))},1500)
 
         // setTimeout
     }
