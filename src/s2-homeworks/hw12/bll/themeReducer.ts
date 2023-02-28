@@ -11,7 +11,7 @@ export const themeReducer = (state = initState, action: ActionsType):StateType =
     switch (action.type) {
         case "SET_THEME_ID":
             const stateCopy = {...state}
-            stateCopy.themeId = action.id
+            stateCopy.themeId = +action.id
         return stateCopy
         // дописать
 
