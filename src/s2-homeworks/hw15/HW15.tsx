@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import s2 from '../../s1-main/App.module.css'
-import s8 from './../hw08/HW8.module.css'
 import s from './HW15.module.css'
 import axios from 'axios'
 import SuperPagination from './common/c9-SuperPagination/SuperPagination'
 import {useSearchParams} from 'react-router-dom'
 import SuperSort from './common/c10-SuperSort/SuperSort'
-import {Loader} from "../hw10/Loader";
 
 /*
 * 1 - дописать SuperPagination
@@ -44,106 +42,94 @@ const HW15 = () => {
     const [sort, setSort] = useState('')
     const [page, setPage] = useState(1)
     const [count, setCount] = useState(4)
-    const [idLoading, setLoading] = useState(true)
+    const [idLoading, setLoading] = useState(false)
     const [totalCount, setTotalCount] = useState(100)
-    const [searchParams, setSearchParams] = useSearchParams(`?page=1&count=4`)
+    const [searchParams, setSearchParams] = useSearchParams()
     const [techs, setTechs] = useState<TechType[]>([])
 
-
-    const sendQuery = (params: ParamsType) => {
+    const sendQuery = (params: any) => {
         setLoading(true)
-
-        // setTimeout(() => {
         getTechs(params)
             .then((res) => {
                 // делает студент
-                setLoading(false)
                 // сохранить пришедшие данные
-                if (res) {
+                if(res) {
                     setTechs(res.data.techs)
                     setTotalCount(res.data.totalCount)
+
                 }
                 //
             })
-        // }, 600)
+            .finally(()=>setLoading(false))
     }
 
     const onChangePagination = (newPage: number, newCount: number) => {
         // делает студент
         setPage(newPage)
         setCount(newCount)
-        setSearchParams({page: page.toString(), count: count.toString()})
-        sendQuery({page: newPage, count: newCount, sort})
-        //
+        sendQuery({page: newPage, count: newCount, sort:sort})
+
+        //setSearchParams({page:page.toString(), count:count.toString()})
+
     }
 
     const onChangeSort = (newSort: string) => {
         // делает студент
-        setPage(1)
         setSort(newSort)
-        // setSearchParams(`?sort=${newSort}`)
-        sendQuery({page, count, sort: newSort})
-        setSearchParams({page: page.toString(), count: count.toString()})
+        setPage(1) // при сортировке сбрасывать на 1 страницу
+        sendQuery({sort:newSort, count: count, page:1})
+        //setSearchParams({page:page.toString(), count:count.toString()})
+
         //
     }
 
-    useEffect(() => {const params = Object.fromEntries(searchParams)
-        sendQuery({page: +params.page, count: +params.count, sort})
+    useEffect(() => {
+        const params = Object.fromEntries(searchParams)
+
+        sendQuery({page: params.page, count: params.count})
         setPage(+params.page || 1)
         setCount(+params.count || 4)
-    }, [searchParams, sort])
+    }, [])
 
     const mappedTechs = techs.map(t => (
-        <tr key={t.id} className={s8.item}>
-            <td id={'hw15-tech-' + t.id} className={s8.nameCol}>
+        <div key={t.id} className={s.row}>
+            <div id={'hw15-tech-' + t.id} className={s.tech}>
                 {t.tech}
-            </td>
+            </div>
 
-            <td id={'hw15-developer-' + t.id} className={s8.ageCol}>
+            <div id={'hw15-developer-' + t.id} className={s.developer}>
                 {t.developer}
-            </td>
-        </tr>
+            </div>
+        </div>
     ))
 
     return (
         <div id={'hw15'}>
-            <div className={s2.container}>
-                <div className={s2.hwTitle}>Homework №15</div>
-            </div>
-            <hr/>
-            <div className={s2.container}>
-                <div className={s2.hw} style={{
-                    marginTop: "32px",
-                    position: "relative",
-                    width: "606px",
-                }}>
-                    {
-                        idLoading &&
-                        <div className={s.loadingWrapper}>
-                            <div className={s.loading}>
-                                <Loader />
-                            </div>
-                        </div>
-                    }
+            <div className={s2.hwTitle}>Homework #15</div>
 
-                    <SuperPagination
-                        page={page}
-                        itemsCountForPage={count}
-                        totalCount={totalCount}
-                        onChange={onChangePagination}
-                    />
+            <div className={s2.hw}>
+                {idLoading && <div id={'hw15-loading'} className={s.loading}>Loading...</div>}
 
-                    <table className={s8.users} style={{marginTop: "38px"}}>
-                        <thead className={s8.thead} style={{background: "#E5E5E5"}}>
-                        <tr>
-                            <td className={s8.nameCol}>Tech<SuperSort sort={sort} value={'tech'} onChange={onChangeSort}/></td>
-                            <td className={s8.ageCol}>Developer<SuperSort sort={sort} value={'developer'} onChange={onChangeSort}/></td>
-                        </tr>
-                        </thead>
+                <SuperPagination
+                    page={page}
+                    itemsCountForPage={count}
+                    totalCount={totalCount}
+                    onChange={onChangePagination}
+                />
 
-                        <tbody>{mappedTechs}</tbody>
-                    </table>
+                <div className={s.rowHeader}>
+                    <div className={s.techHeader}>
+                        tech
+                        <SuperSort sort={sort} value={'tech'} onChange={onChangeSort}/>
+                    </div>
+
+                    <div className={s.developerHeader}>
+                        developer
+                        <SuperSort sort={sort} value={'developer'} onChange={onChangeSort}/>
+                    </div>
                 </div>
+
+                {mappedTechs}
             </div>
         </div>
     )
